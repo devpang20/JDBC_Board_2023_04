@@ -68,6 +68,20 @@ public class App {
                     System.out.println("로그인 아이디를 입력해 주세요.");
                     continue;
                 }
+
+                SecSql sql = new SecSql();
+
+                sql.append("SELECT COUNT(*) > 0");
+                sql.append("FROM `member`");
+                sql.append("WHERE loginId = ?", loginId);
+
+                boolean isLoginIdDup = DBUtil.selectRowBooleanValue(conn, sql);
+
+                if (isLoginIdDup) {
+                    System.out.printf("%s은(는) 이미 사용중인 로그인 아이디입니다. \n", loginId);
+                    continue;
+                }
+
                 break;
             }
             // 회원가입 비밀번호 입력
@@ -126,10 +140,7 @@ public class App {
             int id = DBUtil.insert(conn, sql);
 
             System.out.printf("%d번 회원이 등록되었습니다.\n", id);
-        } else if (rq.getUrlPath().equals("article list")) {
-
-
-        } else if (rq.getUrlPath().equals("/usr/article/write")) {
+        }  else if (rq.getUrlPath().equals("/usr/article/write")) {
             System.out.println("== 게시물 등록 ==");
             System.out.printf("제목 : ");
             String title = sc.nextLine();
