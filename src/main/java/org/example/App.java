@@ -1,5 +1,8 @@
 package org.example;
 
+import org.example.util.DBUtil;
+import org.example.util.SecSql;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +20,8 @@ public class App {
 
             Rq rq = new Rq(cmd);
             Connection conn = null;
-
+            
+            //DB 연결
             try {
                 Class.forName("com.mysql.jdbc.Driver");
 
@@ -40,7 +44,7 @@ public class App {
                     e.printStackTrace();
                 }
             }
-
+            // 연결 끝
 
         }
     }
@@ -53,30 +57,16 @@ public class App {
 
             System.out.printf("내용 : ");
             String body = sc.nextLine();
-            int id = ++articleListId;
 
-            PreparedStatement pstmt = null;
+            SecSql sql = new SecSql();
 
-            try {
-                String sql = "INSERT INTO article";
-                sql += " SET regDate = NOW()";
-                sql += ", updateDate = NOW()";
-                sql += ", title = \"" + title + "\"";
-                sql += ", `body` = \"" + body + "\"";
+            sql.append("INSERT INTO article");
+            sql.append(" SET regDate = NOW()");
+            sql.append(", UpdateDate = NOW()");
+            sql.append(", title = ?", title);
+            sql.append(", title = ?", body);
 
-                pstmt = conn.prepareStatement(sql);
-                pstmt.executeUpdate();
-            } catch (SQLException e) {
-                System.out.println("에러 : " + e);
-            } finally {
-                try {
-                    if (pstmt != null && !pstmt.isClosed()) {
-                        pstmt.close();
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
+            int id = DBUtil.insert(conn, sql);
 
             System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
 
