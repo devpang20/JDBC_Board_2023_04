@@ -5,9 +5,9 @@ import java.util.Map;
 public class Article {
     public int id;
     public String title;
-    private String body;
-    private String regDate;
-    private String updateDate;
+    public String body;
+    public String regDate;
+    public String updateDate;
 
     public Article(int id, String regDate, String updateDate, String title, String body) {
         this.id = id;
@@ -27,6 +27,8 @@ public class Article {
         this.id = (int) articleMap.get("id");
         this.title = (String) articleMap.get("title");
         this.body = (String) articleMap.get("body");
+        this.body = (String) articleMap.get("regDate");
+        this.body = (String) articleMap.get("updateDate");
     }
 
     @Override
