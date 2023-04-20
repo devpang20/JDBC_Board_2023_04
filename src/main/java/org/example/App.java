@@ -156,7 +156,7 @@ public class App {
 
             System.out.printf("%d번 게시물이 삭제되었습니다.\n", id);
 
-        } else if (rq.getUrlPath().equals("/usr/article/delete")) {
+        } else if (rq.getUrlPath().equals("/usr/article/detail")) {
             int id = rq.getIntParam("id", 0);
 
             if (id == 0) {
