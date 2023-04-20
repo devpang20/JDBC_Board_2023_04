@@ -21,7 +21,7 @@ public class App {
 
             Rq rq = new Rq(cmd);
             Connection conn = null;
-            
+
             //DB 연결
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -51,6 +51,9 @@ public class App {
     }
 
     private void doAction(Connection conn, Scanner sc, Rq rq, String cmd) {
+        //
+
+        //
         if (rq.getUrlPath().equals("/usr/article/write")) {
             System.out.println("== 게시물 등록 ==");
             System.out.printf("제목 : ");
