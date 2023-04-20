@@ -52,25 +52,23 @@ public class App {
 
     private void doAction(Connection conn, Scanner sc, Rq rq, String cmd) {
         if (rq.getUrlPath().equals("/usr/article/write")) {
-            System.out.println("=== 게시물 등록 ===");
+            System.out.println("== 게시물 등록 ==");
             System.out.printf("제목 : ");
             String title = sc.nextLine();
-
             System.out.printf("내용 : ");
             String body = sc.nextLine();
 
             SecSql sql = new SecSql();
 
             sql.append("INSERT INTO article");
-            sql.append(" SET regDate = NOW()");
-            sql.append(", UpdateDate = NOW()");
+            sql.append("SET regDate = NOW()");
+            sql.append(", updateDate = NOW()");
             sql.append(", title = ?", title);
             sql.append(", `body` = ?", body);
 
             int id = DBUtil.insert(conn, sql);
 
             System.out.printf("%d번 게시물이 등록되었습니다.\n", id);
-
         } else if (rq.getUrlPath().equals("article list")) {
             List<Article> articles = new ArrayList<>();
 
